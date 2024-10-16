@@ -9,26 +9,62 @@
 
     <ul>
         {% for article in articles %}
-            <li><a href="{% url 'article' article.id %}">{{ article.title }}</a></li>
+            <li><a href="{% url 'articles:article' article.id %}">{{ article.title }}</a></li>
         {% empty %}
             <li> No Articles are available </li>
         {% endfor %}
     </ul>
 
-      <ul class="pagination">
-        <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-        </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-        </li>
-    </ul>
+    {% if articles.has_other_pages %}
+        <ul class="pagination">
+            {% if articles.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="/articles?page={{ articles.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled ">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+
+            {% for i in paginator.page_range %}
+                {% if articles.number == i %}
+                    <li class="page-item disabled ">
+                        <a class="page-link" href="#">
+                        {{ i }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="/articles?page={{ i }}">
+                        {{ i }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+
+            {% if articles.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="/articles?page={{ articles.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled ">
+                    <a class="page-link" href="#">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+
+        </ul>
+    {% endif %}
 
 {% endblock %}
