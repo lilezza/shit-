@@ -28,20 +28,26 @@ def single(request , article_id):
 
 def send(request):
     if request.method == 'POST':
-        # Validation data
         form = SendArticleForm(request.POST)
-
         if form.is_valid():
-            Articles.objects.create(
-                title = form.cleaned_data['title'],
-                body = form.cleaned_data['body'],
-                published_at = form.cleaned_data ['published_at']
-            )
+            form.save()
 
             return redirect('articles:articles')
-
-
     else :
         form = SendArticleForm()
 
     return render(request , 'send.html' , { 'form' : form })
+
+def edit(request , article_id):
+    article =get_object_or_404(Articles , id = article_id)
+    if request.method == 'POST':
+        form = SendArticleForm(request.POST , instance = article)
+        if form.is_valid() :
+
+            form.save()
+
+            return redirect('articles:articles')
+    else :
+        form = SendArticleForm(instance = article)
+
+    return render(request , 'edit.html' , { 'form' : form , 'article_id' : article_id})

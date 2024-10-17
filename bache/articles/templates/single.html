@@ -6,5 +6,9 @@
 
 {% block content %}
     <h2>{{ article.title }}</h2>
+    <div>
+        <a href="{% url 'articles:article.edit' article.id%}" class = "btn btn-primary btn-sm me-1">edit</a>
+        <a href="#" class = "btn btn-danger btn-sm ms-1">delete</a>
+    </div>
     <p>{{article.body}}</p>
 {% endblock %}
