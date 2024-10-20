@@ -1,0 +1,10 @@
+{% extends "master.html" %}
+
+{% block content %}
+    <h2>Are you sure you want to delete the article "{{ object.title }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm ms-1">Yes, delete</button>
+        <a href="{% url 'articles:articles' %}" class="btn btn-secondary btn-sm ms-1">Cancel</a>
+    </form>
+{% endblock %}

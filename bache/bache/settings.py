@@ -45,11 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'articles.apps.ArticlesConfig',
+    'accounts.apps.AccountsConfig',
     'home',
     'rosetta',
     'jalali_date',
-
-
 ]
 
 JALALI_DATE_DEFAULTS = {
@@ -143,6 +142,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 
 # Internationalization

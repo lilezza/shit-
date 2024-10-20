@@ -2,7 +2,7 @@ from django import forms
 import datetime
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .models import Articles
+from .models import Articles , Category
 
 class SendArticleForm(forms.ModelForm):
     # title = forms.CharField(min_length=3, max_length=50)
@@ -11,9 +11,11 @@ class SendArticleForm(forms.ModelForm):
 
     class Meta:
         model = Articles
-        fields = ['title','body','published_at']
+        fields = ['title','body', 'categories' ,'published_at']
         widgets = {
-            'title' : forms.TextInput(attrs= {'class' : 'form-control'})
+            'title' : forms.TextInput(attrs= {'class' : 'form-control'}),
+            'categories' : forms.SelectMultiple(attrs= {'class' : 'form-control'}),
+            'published_at': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
         }
 
     def clean_published_at(self):

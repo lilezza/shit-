@@ -25,7 +25,8 @@ urlpatterns = i18n_patterns (
     path('rosetta/', include('rosetta.urls')),
     path('articles/' , include('articles.urls')),
     path('i18n/', set_language , name='set_language'),
-    path('' , home_views.index) ,
-    path('contact/' , home_views.contact , name = 'contact') ,
-    path('about/' , home_views.about , name = 'about') ,
+    path('' , home_views.HomeView.as_view()) ,
+    path('contact/' , home_views.ContactView.as_view() , name = 'contact') ,
+    path('about/' , home_views.AboutView.as_view() , name = 'about') ,
+    path('accounts/' , include('accounts.urls'))
 )

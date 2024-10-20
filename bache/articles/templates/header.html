@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <a class="navbar-brand" href="#">Top navbar</a>
+  <a class="navbar-brand ms-4" href="#">Top navbar</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -17,7 +17,15 @@
     </ul>
     <form class="d-flex ms-auto">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button class="btn btn-outline-success me-3" type="submit">Search</button>
     </form>
+    {% if user.is_authenticated %}
+            <a href="{% url 'accountlogout' %}" class="btn btn-warning me-2">Logout</a>
+            <a href="{% url 'profile' %}" class="btn btn-success me-2">Profile</a>
+    {% else %}
+            <a href="{% url 'login' %}" class="btn btn-success me-2">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-danger me-2">Register</a>
+    {% endif %}
+
   </div>
 </nav>

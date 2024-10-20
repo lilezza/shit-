@@ -5,10 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ article.title }}</h2>
+    <h2>{{ object.title }}</h2>
+    {% if article.user %}
+        <p>
+            user : {{ article.user }}
+        </p>
+    {% else %}
+        <p>No user associated with this article.</p>
+    {% endif %}
+    {% if article.categories.count %}
+        <h4>Categories :</h4>
+        {% for category in article.categories.all %}
+            <p>{{ category.name }},</p>
+        {% endfor %}
+    {% else %}
+        <p>No category/categories register here .</p>
+    {% endif %}
+    <p>{{object.body}}</p>
     <div>
-        <a href="{% url 'articles:article.edit' article.id%}" class = "btn btn-primary btn-sm me-1">edit</a>
-        <a href="#" class = "btn btn-danger btn-sm ms-1">delete</a>
+        {% if perms.articles.change_articles %}
+            <a href="{% url 'articles:article.edit' article.pk %}" class = "btn btn-primary btn-sm me-1">Edit</a>
+        {% endif %}
+        {% if perms.articles.delete_articles %}
+            <a href="{% url 'articles:article.delete' article.pk %}" class = "btn btn-danger btn-sm ms-1">Delete</a>
+        {% endif %}
+        {% if perms.articles.private_section_article %}
+            <div class="alert alert-warning mt-3 d-flex justify-content-center py-3">This is a private section</div>
+        {% endif %}
     </div>
-    <p>{{article.body}}</p>
 {% endblock %}
